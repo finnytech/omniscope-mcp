@@ -19,7 +19,7 @@ OmniScope MCP is designed with two distinct operational modes:
 | **Primary Data Source** | Cloudflare Anycast Edge APIs (`omniscope-web.pages.dev/api/*`) | High-speed local SQLite database (`nodes.db` / `omniscope_spatial.db`) |
 | **Node Coverage** | Global 147-model consensus, NOAA alerts, USGS quakes | **1,013,474 indexed ground nodes** (508,474 cams + 505,000 weather stations) |
 | **Dependencies** | **Zero dependencies** (pure Node.js 18+ standard library) | Pure Python standard library (`sqlite3`, `json`, `math`) |
-| **Setup Time** | Instant (run with `node` or `npx`) | Sub-millisecond local queries from D: HDD |
+| **Setup Time** | Instant (run with `node` or `npx`) | Sub-millisecond local queries from disk |
 | **Remote HTTP / SSE** | Supported (`/mcp` and `/mcp/sse`) | Stdio IPC for Claude Desktop & local CLI |
 
 ---
@@ -42,11 +42,12 @@ Connects directly to the live Cloudflare Anycast edge APIs:
   "mcpServers": {
     "omniscope-web": {
       "command": "node",
-      "args": ["D:/projects/omniscope-mcp/web/index.js"]
+      "args": ["<PATH_TO_OMNISCOPE_MCP>/web/index.js"]
     }
   }
 }
 ```
+> 💡 *Replace `<PATH_TO_OMNISCOPE_MCP>` with the directory where you cloned this repository (e.g. `/home/user/omniscope-mcp` or `C:/tools/omniscope-mcp`).*
 
 ---
 
@@ -60,7 +61,7 @@ Connects directly to your local `nodes.db` or `omniscope_spatial.db` on disk, pe
   "mcpServers": {
     "omniscope-local": {
       "command": "python",
-      "args": ["D:/projects/omniscope-mcp/local/server.py"]
+      "args": ["<PATH_TO_OMNISCOPE_MCP>/local/server.py"]
     }
   }
 }
@@ -72,15 +73,16 @@ Connects directly to your local `nodes.db` or `omniscope_spatial.db` on disk, pe
   "mcpServers": {
     "omniscope-web": {
       "command": "node",
-      "args": ["D:/projects/omniscope-mcp/web/index.js"]
+      "args": ["<PATH_TO_OMNISCOPE_MCP>/web/index.js"]
     },
     "omniscope-local": {
       "command": "python",
-      "args": ["D:/projects/omniscope-mcp/local/server.py"]
+      "args": ["<PATH_TO_OMNISCOPE_MCP>/local/server.py"]
     }
   }
 }
 ```
+> 💡 *Replace `<PATH_TO_OMNISCOPE_MCP>` with your actual clone directory path.*
 
 ---
 
