@@ -23,16 +23,27 @@ SERVER_VERSION = "2.0.0"
 DB_ENV = os.environ.get("OMNISCOPE_DB_PATH")
 CANDIDATES = [
     DB_ENV,
-    os.path.join(os.path.dirname(__file__), "nodes.db"),
-    os.path.join(os.path.dirname(__file__), "omniscope_spatial.db"),
-    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "omniscope-osint", "backend", "data", "nodes.db"),
-    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "omniscope-osint", "backend", "data", "omniscope_spatial.db"),
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "omniscope-osint", "backend", "data", "omniscope_spatial.db")),
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "omniscope-osint", "backend", "data", "nodes.db")),
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "omniscope-osint", "backend", "data", "nexus_spatial.db")),
     r"D:\projects\omniscope-osint\backend\data\omniscope_spatial.db",
     r"D:\projects\omniscope-osint\backend\data\nodes.db",
-    r"D:\projects\omniscope-osint\backend\data\nexus_spatial.db"
+    r"D:\projects\omniscope-osint\backend\data\nexus_spatial.db",
+    os.path.join(os.path.dirname(__file__), "omniscope_spatial.db"),
+    os.path.join(os.path.dirname(__file__), "nodes.db")
 ]
 
-DB_PATH = next((p for p in CANDIDATES if p and os.path.exists(p)), None)
+def _resolve_db_path() -> Optional[str]:
+    # Prioritize populated database (> 10000 bytes)
+    for p in CANDIDATES:
+        if p and os.path.exists(p) and os.path.getsize(p) > 10000:
+            return p
+    for p in CANDIDATES:
+        if p and os.path.exists(p):
+            return p
+    return None
+
+DB_PATH = _resolve_db_path()
 
 def get_db():
     if not DB_PATH or not os.path.exists(DB_PATH):
@@ -44,6 +55,14 @@ def get_db():
     except Exception as e:
         sys.stderr.write(f"[LocalMCP] Error opening database: {e}\n")
         return None
+
+def get_table_columns(conn, table_name: str) -> set:
+    try:
+        cur = conn.cursor()
+        cur.execute(f"PRAGMA table_info({table_name})")
+        return {r[1] for r in cur.fetchall()}
+    except Exception:
+        return set()
 
 TOOLS = [
   {
@@ -104,17 +123,34 @@ def handle_search_cameras(args: Dict[str, Any]) -> Dict[str, Any]:
     limit = min(int(args.get("limit", 25)), 100)
     bbox = args.get("bbox")
 
+    cam_cols = get_table_columns(conn, "cameras")
+    has_payload = "payload" in cam_cols
+    has_city = "city" in cam_cols
+    has_country = "country" in cam_cols
+
     conditions = []
     params = []
 
     if query:
-        conditions.append("(title LIKE ? OR city LIKE ? OR provider LIKE ?)")
         wild = f"%{query}%"
-        params.extend([wild, wild, wild])
+        if has_city:
+            conditions.append("(title LIKE ? OR city LIKE ? OR provider LIKE ?)")
+            params.extend([wild, wild, wild])
+        elif has_payload:
+            conditions.append("(title LIKE ? OR provider LIKE ? OR json_extract(payload, '$.city') LIKE ?)")
+            params.extend([wild, wild, wild])
+        else:
+            conditions.append("(title LIKE ? OR provider LIKE ?)")
+            params.extend([wild, wild])
 
     if country:
-        conditions.append("country LIKE ?")
-        params.append(f"%{country}%")
+        wild_country = f"%{country}%"
+        if has_country:
+            conditions.append("country LIKE ?")
+            params.append(wild_country)
+        elif has_payload:
+            conditions.append("json_extract(payload, '$.country') LIKE ?")
+            params.append(wild_country)
 
     if bbox and isinstance(bbox, dict):
         min_lat = bbox.get("min_lat", -90)
@@ -125,12 +161,26 @@ def handle_search_cameras(args: Dict[str, Any]) -> Dict[str, Any]:
         params.extend([min_lat, max_lat, min_lon, max_lon])
 
     where_sql = ("WHERE " + " AND ".join(conditions)) if conditions else ""
-    sql = f"SELECT id, title, lat, lon, provider, city, country, stream_url, poster_url FROM cameras {where_sql} LIMIT ?"
+    preferred_cols = ["id", "title", "lat", "lon", "provider", "stream_type", "city", "country", "stream_url", "poster_url", "payload"]
+    cols_to_select = [c for c in preferred_cols if c in cam_cols] or ["*"]
+    sql = f"SELECT {', '.join(cols_to_select)} FROM cameras {where_sql} LIMIT ?"
     params.append(limit)
 
     cur = conn.cursor()
     cur.execute(sql, params)
-    rows = [dict(r) for r in cur.fetchall()]
+    rows = []
+    for r in cur.fetchall():
+        item = dict(r)
+        if "payload" in item and item["payload"]:
+            try:
+                p = json.loads(item["payload"]) if isinstance(item["payload"], str) else item["payload"]
+                for k in ["city", "country", "stream_url", "poster_url", "preview_url", "category"]:
+                    if k not in item or item[k] is None:
+                        item[k] = p.get(k)
+            except Exception:
+                pass
+            del item["payload"]
+        rows.append(item)
 
     return {
         "status": "ok",

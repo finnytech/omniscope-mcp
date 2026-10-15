@@ -28,7 +28,7 @@ Add to your `claude_desktop_config.json` (located at `%APPDATA%\Claude\claude_de
   "mcpServers": {
     "omniscope-web": {
       "command": "node",
-      "args": ["D:/projects/omniscope-web/mcp-server/index.js"]
+      "args": ["D:/projects/omniscope-mcp/web/index.js"]
     }
   }
 }
@@ -53,7 +53,7 @@ Or run via npx when published:
   "mcpServers": {
     "omniscope-web": {
       "command": "node",
-      "args": ["D:/projects/omniscope-web/mcp-server/index.js"]
+      "args": ["D:/projects/omniscope-mcp/web/index.js"]
     }
   }
 }
