@@ -2,6 +2,7 @@
 
 [![Official Original Project](https://img.shields.io/badge/OmniScope-OFFICIAL%20ORIGINAL-00ffcc?style=for-the-badge&logo=shield)](https://github.com/finnytech/omniscope-mcp)
 [![Author: FinnyTech](https://img.shields.io/badge/Author-FinnyTech-ff0055?style=for-the-badge)](https://github.com/finnytech)
+[![M8ven Verified](https://m8ven.ai/badge/mcp/finnytech/omniscope-osint?variant=verified)](https://m8ven.ai/mcp/finnytech/omniscope-osint?s=readme)
 [![MCP Protocol: 2024-11-05](https://img.shields.io/badge/MCP-2024--11--05-blue?style=for-the-badge)](https://modelcontextprotocol.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 

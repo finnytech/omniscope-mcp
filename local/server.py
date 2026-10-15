@@ -68,6 +68,11 @@ TOOLS = [
   {
     "name": "omniscope_local_search_cameras",
     "description": "Sub-millisecond query across 105,000+ local surveillance webcams and traffic sensors in SQLite nodes.db.",
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": False,
+    "annotations": { "readOnlyHint": True, "destructiveHint": False, "idempotentHint": True, "openWorldHint": False },
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -91,6 +96,11 @@ TOOLS = [
   {
     "name": "omniscope_local_weather_stations",
     "description": "Query 505,000+ ground weather observation stations indexed in local spatial database.",
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": False,
+    "annotations": { "readOnlyHint": True, "destructiveHint": False, "idempotentHint": True, "openWorldHint": False },
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -105,6 +115,11 @@ TOOLS = [
   {
     "name": "omniscope_local_db_stats",
     "description": "Return health, node counts, and table statistics of the local SQLite spatial database.",
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": False,
+    "annotations": { "readOnlyHint": True, "destructiveHint": False, "idempotentHint": True, "openWorldHint": False },
     "inputSchema": {
       "type": "object",
       "properties": {},

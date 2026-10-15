@@ -16,6 +16,11 @@ const TOOLS = [
   {
     name: "omniscope_weather_consensus",
     description: "Calculate live meteorological multi-model consensus across 147 certified models (DWD ICON, ECMWF IFS, NOAA GFS, GEM Global) for any global coordinates.",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
     inputSchema: {
       type: "object",
       properties: {
@@ -29,6 +34,11 @@ const TOOLS = [
   {
     name: "omniscope_storm_intercept",
     description: "Fetch real-time convective storm telemetry, NWS tornado warnings, and severe thunderstorm alerts from NOAA.",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
     inputSchema: {
       type: "object",
       properties: {},
@@ -38,6 +48,11 @@ const TOOLS = [
   {
     name: "omniscope_seismic_monitor",
     description: "Query real-time global tectonic activity from USGS feeds, including magnitude, epicenter, depth, and tsunami alert flags.",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
     inputSchema: {
       type: "object",
       properties: {
@@ -50,6 +65,11 @@ const TOOLS = [
   {
     name: "omniscope_space_weather",
     description: "Retrieve current geomagnetic storm activity, planetary Kp-index, solar flux, and aurora visibility forecasts from NOAA SWPC.",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
     inputSchema: {
       type: "object",
       properties: {},
@@ -59,6 +79,11 @@ const TOOLS = [
   {
     name: "omniscope_search_webcams",
     description: "Search global surveillance, highway, alpine, and scenic public webcams by location, country, or keyword.",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
     inputSchema: {
       type: "object",
       properties: {
@@ -72,6 +97,11 @@ const TOOLS = [
   {
     name: "omniscope_generate_sitrep",
     description: "Synthesize a comprehensive tactical Situation Report (SITREP) combining weather, seismic, surveillance, and threat metrics for a specified location.",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
     inputSchema: {
       type: "object",
       properties: {
