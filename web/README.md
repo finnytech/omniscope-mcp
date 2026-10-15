@@ -28,11 +28,12 @@ Add to your `claude_desktop_config.json` (located at `%APPDATA%\Claude\claude_de
   "mcpServers": {
     "omniscope-web": {
       "command": "node",
-      "args": ["D:/projects/omniscope-mcp/web/index.js"]
+      "args": ["<PATH_TO_OMNISCOPE_MCP>/web/index.js"]
     }
   }
 }
 ```
+> 💡 *Replace `<PATH_TO_OMNISCOPE_MCP>` with your actual clone directory path.*
 
 Or run via npx when published:
 ```json
@@ -53,7 +54,7 @@ Or run via npx when published:
   "mcpServers": {
     "omniscope-web": {
       "command": "node",
-      "args": ["D:/projects/omniscope-mcp/web/index.js"]
+      "args": ["<PATH_TO_OMNISCOPE_MCP>/web/index.js"]
     }
   }
 }
