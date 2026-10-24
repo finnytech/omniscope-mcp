@@ -1,10 +1,19 @@
+<div align="center">
+
+<img src="assets/logo-badge.png" alt="OmniScope OSINT Official Logo" width="210" style="border-radius: 22px; box-shadow: 0 0 28px rgba(0, 240, 255, 0.35);" />
+
 # 🛰️ OmniScope MCP Suite [OFFICIAL]
 
 [![Official Original Project](https://img.shields.io/badge/OmniScope-OFFICIAL%20ORIGINAL-00ffcc?style=for-the-badge&logo=shield)](https://github.com/finnytech/omniscope-mcp)
 [![Author: FinnyTech](https://img.shields.io/badge/Author-FinnyTech-ff0055?style=for-the-badge)](https://github.com/finnytech)
+[![Cloudflare Pages Live](https://img.shields.io/badge/Live-omniscope--web.pages.dev-blue?style=for-the-badge)](https://omniscope-web.pages.dev)
+[![Vercel Live](https://img.shields.io/badge/Live-omniscope--web.vercel.app-black?style=for-the-badge&logo=vercel)](https://omniscope-web.vercel.app)
+[![Chrome Extension (MV3)](https://img.shields.io/badge/Chrome_Extension-Side_Panel_v2.6.0-00f0ff?style=for-the-badge&logo=googlechrome&logoColor=white)](https://github.com/finnytech/omniscope-extension)
 [![M8ven Verified](https://m8ven.ai/badge/mcp/finnytech/omniscope-osint?variant=verified)](https://m8ven.ai/mcp/finnytech/omniscope-osint?s=readme)
 [![MCP Protocol: 2024-11-05](https://img.shields.io/badge/MCP-2024--11--05-blue?style=for-the-badge)](https://modelcontextprotocol.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+
+</div>
 
 The official **Model Context Protocol (MCP)** suite for the **OmniScope OSINT Tactical Ecosystem**, providing LLMs, autonomous agents (Claude Desktop, Cursor, Zed, Windsurf), and developers with direct access to global geospatial intelligence, numerical weather supercomputers, and local high-density spatial databases.
 
@@ -48,7 +57,7 @@ Connects directly to the live Cloudflare Anycast edge APIs:
   }
 }
 ```
-> 💡 *Replace `<PATH_TO_OMNISCOPE_MCP>` with the directory where you cloned this repository (e.g. `/home/user/omniscope-mcp` or `C:/tools/omniscope-mcp`).*
+> 💡 *Replace `<PATH_TO_OMNISCOPE_MCP>` with the directory where you cloned this repository (e.g. `/home/user/omniscope-mcp` or `D:/projects/omniscope-mcp`).*
 
 ---
 
@@ -104,11 +113,16 @@ Connects directly to your local `nodes.db` or `omniscope_spatial.db` on disk, pe
 
 ---
 
-## 🌐 Related Official Repositories
+## 🌐 Official OmniScope Ecosystem & Sister Repositories
 
-- **OmniScope Web**: [`https://github.com/finnytech/omniscope-web`](https://github.com/finnytech/omniscope-web) (Live: [`https://omniscope-web.pages.dev`](https://omniscope-web.pages.dev))
-- **OmniScope OSINT (Desktop & Engine)**: [`https://github.com/finnytech/omniscope-osint`](https://github.com/finnytech/omniscope-osint)
-- **OmniScope MCP**: [`https://github.com/finnytech/omniscope-mcp`](https://github.com/finnytech/omniscope-mcp)
+| Target / Platform | Link | Description |
+| :--- | :--- | :--- |
+| **🌐 Web HUD (Cloudflare Pages)** | [`https://omniscope-web.pages.dev`](https://omniscope-web.pages.dev) | Primary global Anycast Edge Web Command Center. |
+| **▲ Web HUD (Vercel Production)** | [`https://omniscope-web.vercel.app`](https://omniscope-web.vercel.app) | High-speed Vercel global production mirror. |
+| **🧩 Chrome Side Panel Extension** | [`github.com/finnytech/omniscope-extension`](https://github.com/finnytech/omniscope-extension) | Official Manifest V3 Chrome / Brave / Edge Side Panel Extension (`v2.6.0`). |
+| **💻 OmniScope Web Repo** | [`github.com/finnytech/omniscope-web`](https://github.com/finnytech/omniscope-web) | Official Web Application & Edge Worker source code. |
+| **🛰️ OmniScope OSINT Repo** | [`github.com/finnytech/omniscope-osint`](https://github.com/finnytech/omniscope-osint) | Native Python FastAPI + SQLite Spatial DB + Desktop/Mobile hub. |
+| **🤖 OmniScope MCP Repo** | [`github.com/finnytech/omniscope-mcp`](https://github.com/finnytech/omniscope-mcp) | **This Repository** — Standalone Model Context Protocol (MCP) server for AI agents. |
 
 ---
 
