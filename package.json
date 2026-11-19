@@ -1,6 +1,6 @@
 {
   "name": "omniscope-mcp",
-  "version": "2.0.0",
+  "version": "2.9.2",
   "description": "Unified Model Context Protocol (MCP) Suite for OmniScope OSINT. Includes both Web Cloudflare Edge MCP and Local SQLite Spatial Grid MCP (1M+ nodes).",
   "main": "web/index.js",
   "bin": {

@@ -10,7 +10,7 @@ import readline from "node:readline";
 
 const API_BASE = process.env.OMNISCOPE_API_BASE || "https://omniscope-web.pages.dev/api";
 const SERVER_NAME = "omniscope-web-mcp";
-const SERVER_VERSION = "2.0.0";
+const SERVER_VERSION = "2.9.2";
 
 const TOOLS = [
   {
@@ -110,6 +110,132 @@ const TOOLS = [
         longitude: { type: "number", description: "Longitude of target location" }
       },
       required: ["location", "latitude", "longitude"]
+    }
+  },
+  {
+    name: "omniscope_chasers_live",
+    description: "Fetch real-time GPS storm chasers, heading/speed telemetry, verified live video stream URLs, and Spotter Network severe reports.",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+    inputSchema: {
+      type: "object",
+      properties: {
+        include_reports: { type: "boolean", description: "Also include Spotter Network reports.txt tornado/hail/wind pins" }
+      },
+      required: []
+    }
+  },
+  {
+    name: "omniscope_radarhub_doppler",
+    description: "Query OU ARRC RadarHub mobile Dopplers (PX-1000, RaXPol, PX-10k, Lidar-Roof, Bistatic-1) with WebSocket URLs, 30-day active calendar, hourly scan counts, plus FARM/DOW live units.",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+    inputSchema: {
+      type: "object",
+      properties: {
+        pathway: { type: "string", description: "Optional RadarHub pathway: px1000, raxpol, px10k, dlroof, bs1" },
+        day: { type: "string", description: "Optional YYYYMMDD date for hourly scan counts & sweeps" }
+      },
+      required: []
+    }
+  },
+  {
+    name: "omniscope_spc_outlooks",
+    description: "Retrieve NOAA SPC Convective Outlooks (Day 1-3 categorical/tornado/hail/wind GeoJSON) and past 24h NWS IEM Local Storm Reports (LSR).",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+    inputSchema: {
+      type: "object",
+      properties: {
+        day: { type: "string", description: "Outlook day: 1, 2, or 3 (default 1)" },
+        hazard: { type: "string", description: "Hazard layer: cat, torn, hail, or wind (default cat)" },
+        lsr_hours: { type: "integer", description: "Hours back for Local Storm Reports (1-48, default 24)" }
+      },
+      required: []
+    }
+  },
+  {
+    name: "omniscope_military_flights",
+    description: "Fetch real-time keyless global Military ADS-B aircraft positions, callsigns, registrations, ICAO hex, altitude, speed, and emergency squawks.",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+    inputSchema: {
+      type: "object",
+      properties: {},
+      required: []
+    }
+  },
+  {
+    name: "omniscope_cyber_outages",
+    description: "Fetch real-time global internet blackout/outage alerts (Georgia Tech IODA v2), censorship anomalies (OONI), and active botnet C2s (abuse.ch Feodo Tracker).",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+    inputSchema: {
+      type: "object",
+      properties: {},
+      required: []
+    }
+  },
+  {
+    name: "omniscope_natural_disasters",
+    description: "Query live NASA EONET v3 natural hazard events (wildfires, volcanoes, severe storms) and GDACS UN/EU disaster alerts.",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+    inputSchema: {
+      type: "object",
+      properties: {},
+      required: []
+    }
+  },
+  {
+    name: "omniscope_space_satellites",
+    description: "Retrieve live NORAD orbital element sets from CelesTrak (weather, noaa, goes, stations, starlink).",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+    inputSchema: {
+      type: "object",
+      properties: {
+        group: { type: "string", description: "CelesTrak group: weather, noaa, goes, stations, starlink (default weather)" }
+      },
+      required: []
+    }
+  },
+  {
+    name: "omniscope_radar_modes",
+    description: "Inspect personalized Doppler radar provider capabilities, supported modes, and active WMS/XYZ tile endpoints (NEXRAD, OpenGeo Velocity/BDHC, DWD, KNMI, ECCC, JMA).",
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: true,
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+    inputSchema: {
+      type: "object",
+      properties: {
+        provider: { type: "string", description: "Radar provider id (e.g. nexrad, nexrad_l2, tdwr, dwd, knmi, eccc_canada, jma_japan)" },
+        mode: { type: "string", description: "Radar mode (e.g. composite, velocity, dual_pol_cc, rain_rate, storm_cells, echo_tops)" }
+      },
+      required: []
     }
   }
 ];
@@ -241,6 +367,54 @@ async function handleToolCall(name, args) {
           location: args.location,
           latitude: args.latitude,
           longitude: args.longitude
+        });
+
+      case "omniscope_chasers_live": {
+        const ch = await apiFetch("/telemetry/chasers");
+        if (args.include_reports) {
+          const sr = await apiFetch("/spotter-reports").catch(() => ({ reports: [] }));
+          return { ...ch, spotter_reports: sr.reports || [] };
+        }
+        return ch;
+      }
+
+      case "omniscope_radarhub_doppler": {
+        const [rh, dow] = await Promise.all([
+          apiFetch("/radarhub", { pathway: args.pathway, day: args.day }),
+          apiFetch("/dow-live").catch(() => ({ units: [] }))
+        ]);
+        return { radarhub: rh, dow_live: dow };
+      }
+
+      case "omniscope_spc_outlooks": {
+        const [otlk, lsr] = await Promise.all([
+          apiFetch("/weather/spc-outlook", { day: args.day || "1", hazard: args.hazard || "cat" }),
+          apiFetch("/weather/lsr", { hours: args.lsr_hours || 24 }).catch(() => ({ reports: [] }))
+        ]);
+        return { spc_outlook: otlk, local_storm_reports: lsr };
+      }
+
+      case "omniscope_military_flights":
+        return await apiFetch("/aviation/military");
+
+      case "omniscope_cyber_outages":
+        return await apiFetch("/cyber/outages");
+
+      case "omniscope_natural_disasters": {
+        const [eonet, gdacs] = await Promise.all([
+          apiFetch("/disasters/eonet"),
+          apiFetch("/disasters/gdacs").catch(() => ({ features: [] }))
+        ]);
+        return { eonet, gdacs };
+      }
+
+      case "omniscope_space_satellites":
+        return await apiFetch("/space/satellites", { group: args.group || "weather" });
+
+      case "omniscope_radar_modes":
+        return await apiFetch("/radar/modes", {
+          provider: args.provider || "nexrad",
+          mode: args.mode || "composite"
         });
 
       default:

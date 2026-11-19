@@ -1,6 +1,6 @@
 {
   "name": "omniscope-web-mcp",
-  "version": "2.0.0",
+  "version": "2.9.2",
   "description": "Official Model Context Protocol (MCP) server for OmniScope OSINT Web Edition. Queries live tactical APIs (weather consensus, severe storms, USGS earthquakes, space weather, webcams, and SITREPs) from the Cloudflare Anycast edge.",
   "main": "index.js",
   "bin": {

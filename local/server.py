@@ -17,7 +17,7 @@ import math
 from typing import Dict, Any, List, Optional
 
 SERVER_NAME = "omniscope-local-mcp"
-SERVER_VERSION = "2.0.0"
+SERVER_VERSION = "2.9.2"
 
 # Auto-locate database
 DB_ENV = os.environ.get("OMNISCOPE_DB_PATH")
