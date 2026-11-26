@@ -10,7 +10,7 @@ import readline from "node:readline";
 
 const API_BASE = process.env.OMNISCOPE_API_BASE || "https://omniscope-web.pages.dev/api";
 const SERVER_NAME = "omniscope-web-mcp";
-const SERVER_VERSION = "2.9.2";
+const SERVER_VERSION = "2.9.9";
 
 const TOOLS = [
   {
